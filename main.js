@@ -6,8 +6,8 @@ var spaces = [
   NaN, NaN, NaN
 ];
 
-var player1 = 'veggies';
-var player2 = 'junkfood';
+var player1 = 'Veggies';
+var player2 = 'Junkfood';
 var currentPlayer = null;
 
 var setNextTurn = function () {
@@ -43,19 +43,24 @@ var checkForWinner = function () {
 $(document).on('click', '#board .space', function (e) {
   var spaceNum = $(e.currentTarget).index();
   console.log('You clicked on space #' + spaceNum);
-
+  // / TODO: Don't mark it unless the space is blank
+  
+  if (typeof spaces[spaceNum] === "number") {
   // Mark the space with the current player's name
-  // TODO: Don't mark it unless the space is blank
   spaces[spaceNum] = currentPlayer;
   // Add class to elem so css can take care of the visuals
   $('#board .space:eq(' + spaceNum + ')').addClass(currentPlayer);
 
   checkForWinner();
   setNextTurn();
+
+  } else {
+    alert('Nice try, that space is already occupied');
+  };
 });
 
 $(document).on('game-win', function (e, winner) {
-  alert("Congratulations" + winner + " you won the game!")
+  alert("Congratulations " + currentPlayer + " you won the game!")
 });
 
 // Start the game
